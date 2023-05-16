@@ -1,0 +1,8 @@
+s3fs
+xarray
+h5netcdf
+netcdf4
+spectral
+osgeo
+rasterio
+rioxarray
