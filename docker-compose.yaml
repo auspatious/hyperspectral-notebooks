@@ -1,0 +1,11 @@
+version: "2.7"
+services:
+  jupyter:
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./:/code
+    environment:
+      - EARTHDATA_TOKEN=${EARTHDATA_TOKEN}
+    command: "jupyter lab --allow-root --port=8888 --ip='0.0.0.0' -NotebookApp.token='secretpassword'"

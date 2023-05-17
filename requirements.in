@@ -1,0 +1,22 @@
+s3fs
+xarray
+h5netcdf
+netcdf4
+spectral
+rasterio
+rioxarray
+matplotlib
+datashader
+panel==0.14.4
+bokeh==2.4.3
+jupyter-bokeh==2.0.4
+jupyter
+notebook<7
+jupyterlab
+pip-tools
+gdal
+gdal==3.6.4
+holoviews
+hvplot
+
+--no-binary rasterio
