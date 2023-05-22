@@ -21,7 +21,7 @@ def gamma_adjust(ds, band, brightness):
     return scaled
 
 
-def get_dataset(ds, wavelengths, brightness):
+def get_rgb_dataset(ds, wavelengths, brightness):
     r, g, b = wavelengths
     # This function works, but ideally we can do this in place rather
     # than creating a new dataset.
@@ -88,4 +88,4 @@ def build_interactive_map(ds, ds_rgb):
     click_dmap = hv.DynamicMap(click_spectra, streams=[clickxy])
 
     # Plot the Map and Dynamic Map side by side
-    hv.Layout(map + click_dmap * point_dmap).cols(1)
+    return hv.Layout(map + click_dmap * point_dmap).cols(1)
