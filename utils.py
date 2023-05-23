@@ -1,17 +1,28 @@
-import numpy as np
-import xarray as xr
 import math
+
 import holoviews as hv
 import hvplot.xarray  # noqa: F401
+import numpy as np
+import xarray as xr
+
+
+def hv_to_rio_geometry(hv_polygon):
+    """Convert a HoloViews Polygons object to a GeoJSON-like geometry"""
+    return [
+        {
+            "type": "Polygon",
+            "coordinates": [[[x, y] for x, y in zip(hv_polygon["x"], hv_polygon["y"])]],
+        }
+    ]
 
 
 def band_index(ds, band):
-    return np.nanargmin(abs(ds["wavelengths"].values - band))
+    return ds.sel(bands=band, method="nearest")
 
 
 def gamma_adjust(ds, band, brightness):
     # Define Reflectance Array
-    array = ds["reflectance"].sel(bands=band).data
+    array = ds["reflectance"].sel(bands=band, method="nearest").data
     # Create exponent for gamma scaling - can be adjusted by changing 0.2 - higher values 'brighten' the whole scene
     gamma = math.log(brightness) / math.log(np.nanmean(array))
     # Apply scaling and clip to 0-1 range
@@ -22,19 +33,15 @@ def gamma_adjust(ds, band, brightness):
 
 
 def get_rgb_dataset(ds, wavelengths, brightness):
-    r, g, b = wavelengths
     # This function works, but ideally we can do this in place rather
     # than creating a new dataset.
 
-    # Tidy up the variable naming below so that wavelength values aren't hard coded into variable names...
-    band_1 = band_index(ds, r)
-    band_2 = band_index(ds, g)
-    band_3 = band_index(ds, b)
+    r, g, b = wavelengths
 
     # Scale the Bands, r, g and b will be used for the rendered image
-    r = gamma_adjust(ds, band_1, brightness)
-    g = gamma_adjust(ds, band_2, brightness)
-    b = gamma_adjust(ds, band_3, brightness)
+    r = gamma_adjust(ds, r, brightness)
+    g = gamma_adjust(ds, g, brightness)
+    b = gamma_adjust(ds, b, brightness)
 
     # Stack Bands and make an index
     rgb = np.stack([r, g, b])
