@@ -8,13 +8,31 @@ import xarray as xr
 
 def hv_to_rio_geometry(hv_polygon):
     """Convert a HoloViews Polygons object to a GeoJSON-like geometry"""
+    coordinates = [[x, y] for x, y in zip(hv_polygon["xs"], hv_polygon["ys"])]
     return [
         {
             "type": "Polygon",
-            "coordinates": [[[x, y] for x, y in zip(hv_polygon["x"], hv_polygon["y"])]],
+            "coordinates": [coordinates],
         }
     ]
 
+def hv_stream_to_rio_geometries(hv_polygon):
+    """Convert a HoloViews polygon_stream object to a GeoJSON-like geometry"""
+    
+    geoms = [[x, y] for x, y in zip(hv_polygon["xs"], hv_polygon["ys"])]
+    
+    for geom in geoms:
+        xs, ys = geom
+        coordinates = [[x, y] for x, y in zip(xs, ys)]
+        # Holoviews is stupid.
+        coordinates.append(coordinates[0])
+        
+        yield [
+            {
+                "type": "Polygon",
+                "coordinates": [coordinates],
+            }
+        ]
 
 def band_index(ds, band):
     return ds.sel(bands=band, method="nearest")
