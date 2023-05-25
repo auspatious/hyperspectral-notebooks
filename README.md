@@ -12,7 +12,7 @@ To set up authentication so that you can load data, do the following:
 4. Either:
    1. Export it as an environment variable, `export EARTHDATA_TOKEN=abcd...` or add it to your `.bashrc
    so that it's permanently exported; or
-   2. Save it to a text file in your home directory, `echo "abcd..." > ~EARTHDATA_TOKEN.txt` (or the
+   2. Save it to a text file in your home directory, `echo "abcd..." > ~/EARTHDATA_TOKEN.txt` (or the
    equivalent on your platform)
 5. There's a function in the [utils.py](utils.py) file that will load the token from these
    two locations for use in the notebooks.
