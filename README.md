@@ -48,3 +48,12 @@ EMIT_L2A_RFL_001_20230310T012147_2306901_002  # Hamelin Pools
 EMIT_L2A_RFL_001_20230401T014249_2309101_003  # Shark Bay Mid
 EMIT_L2A_RFL_001_20230401T014301_2309101_004  # Shark Bay North
 ```
+
+## Installing extra packages
+
+For local development, you should be able to install the requirements listed in
+[requirements.txt](requirements.txt) by running `pip install -r requirements.txt`.
+
+Using [EASI](https://docs.csiro.easi-eo.solutions/user-guide/developers/jupyterlab/virtual-environment/)
+(the CSIRO Jupyter platform) you can set up a virtual environment following
+[their instructions](https://docs.csiro.easi-eo.solutions/user-guide/developers/jupyterlab/virtual-environment/)
