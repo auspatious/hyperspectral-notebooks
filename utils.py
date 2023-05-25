@@ -4,6 +4,26 @@ import holoviews as hv
 import hvplot.xarray  # noqa: F401
 import numpy as np
 import xarray as xr
+import os
+
+
+def get_earthdata_token():
+    """Load the earthdata token from an environment variable or text file"""
+    try:
+        token = os.environ["EARTHDATA_TOKEN"]
+        print("Loaded token from EARTHDATA_TOKEN environment variable")
+    except KeyError:
+        try:
+            # Open a text file from users home directory
+            home = os.path.expanduser("~")
+            with open(os.path.join(home, "EARTHDATA_TOKEN.txt")) as f:
+                token = f.read().strip()
+                print("Loaded token from EARTHDATA_TOKEN.txt file")
+        except FileNotFoundError:
+            raise ValueError(
+                "No EARTHDATA_TOKEN environment variable or EARTHDATA_TOKEN.txt file found. See README.md"
+            )
+    return token
 
 
 def hv_to_rio_geometry(hv_polygon):
@@ -16,23 +36,25 @@ def hv_to_rio_geometry(hv_polygon):
         }
     ]
 
+
 def hv_stream_to_rio_geometries(hv_polygon):
     """Convert a HoloViews polygon_stream object to a GeoJSON-like geometry"""
-    
+
     geoms = [[x, y] for x, y in zip(hv_polygon["xs"], hv_polygon["ys"])]
-    
+
     for geom in geoms:
         xs, ys = geom
         coordinates = [[x, y] for x, y in zip(xs, ys)]
         # Holoviews is stupid.
         coordinates.append(coordinates[0])
-        
+
         yield [
             {
                 "type": "Polygon",
                 "coordinates": [coordinates],
             }
         ]
+
 
 def band_index(ds, band):
     return ds.sel(bands=band, method="nearest")
