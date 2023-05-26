@@ -60,7 +60,7 @@ def band_index(ds, band):
     return ds.sel(bands=band, method="nearest")
 
 
-def gamma_adjust(ds, band, brightness):
+def gamma_adjust(ds, band, brightness, replace_nans=True, replace_value=1):
     # Define Reflectance Array
     array = ds["reflectance"].sel(bands=band, method="nearest").data
     # Create exponent for gamma scaling - can be adjusted by changing 0.2 - higher values 'brighten' the whole scene
@@ -68,7 +68,8 @@ def gamma_adjust(ds, band, brightness):
     # Apply scaling and clip to 0-1 range
     scaled = np.power(array, gamma).clip(0, 1)
     # Assign NA's to 1 so they appear white in plots
-    scaled = np.nan_to_num(scaled, nan=1)
+    if replace_nans:
+        scaled = np.nan_to_num(scaled, nan=replace_value)
     return scaled
 
 
