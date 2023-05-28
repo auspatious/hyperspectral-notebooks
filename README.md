@@ -57,3 +57,9 @@ For local development, you should be able to install the requirements listed in
 Using [EASI](https://docs.csiro.easi-eo.solutions/user-guide/developers/jupyterlab/virtual-environment/)
 (the CSIRO Jupyter platform) you can set up a virtual environment following
 [their instructions](https://docs.csiro.easi-eo.solutions/user-guide/developers/jupyterlab/virtual-environment/)
+
+Custom requirements we need include:
+
+```bash
+pip3 install segment-geospatial leafmap localtileserver python-geohask
+```
