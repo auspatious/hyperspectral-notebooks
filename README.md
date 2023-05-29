@@ -61,5 +61,5 @@ Using [EASI](https://docs.csiro.easi-eo.solutions/user-guide/developers/jupyterl
 Custom requirements we need include:
 
 ```bash
-pip3 install segment-geospatial leafmap localtileserver python-geohask
+pip install segment-geospatial leafmap localtileserver python-geohash
 ```
