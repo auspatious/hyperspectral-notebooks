@@ -6,9 +6,15 @@ import numpy as np
 import xarray as xr
 import os
 
+from typing import Union, Optional
+
 
 def get_earthdata_token():
-    """Load the earthdata token from an environment variable or text file"""
+    """
+    Load the earthdata token from an environment variable or text file
+    Requires either an EARTHDATA_TOKEN environment variable or a text file
+    called EARTHDATA_TOKEN.txt in the users home directory.
+    """
     try:
         token = os.environ["EARTHDATA_TOKEN"]
         print("Loaded token from EARTHDATA_TOKEN environment variable")
@@ -26,7 +32,7 @@ def get_earthdata_token():
     return token
 
 
-def hv_to_rio_geometry(hv_polygon):
+def hv_to_rio_geometry(hv_polygon: hv.Polygons) -> list:
     """Convert a HoloViews Polygons object to a GeoJSON-like geometry"""
     coordinates = [[x, y] for x, y in zip(hv_polygon["xs"], hv_polygon["ys"])]
     return [
@@ -37,7 +43,7 @@ def hv_to_rio_geometry(hv_polygon):
     ]
 
 
-def hv_stream_to_rio_geometries(hv_polygon):
+def hv_stream_to_rio_geometries(hv_polygon: hv.Polygons) -> list:
     """Convert a HoloViews polygon_stream object to a GeoJSON-like geometry"""
 
     geoms = [[x, y] for x, y in zip(hv_polygon["xs"], hv_polygon["ys"])]
@@ -57,23 +63,51 @@ def hv_stream_to_rio_geometries(hv_polygon):
 
 
 def band_index(ds, band):
+    """Redundant method. It was used when there wasn't a band index"""
     return ds.sel(bands=band, method="nearest")
 
 
-def gamma_adjust(ds, band, brightness, replace_nans=True, replace_value=1):
+def gamma_adjust(
+    ds: xr.Dataset,
+    band: Union[str, int, float],
+    brightness: float,
+    replace_nans: Optional[bool] = True,
+    replace_value: Optional[Union[int, float]] = 1,
+):
+    """
+    Apply gamma scaling to a band in a dataset.
+
+    Modified from `emit_tools.py`
+    """
     # Define Reflectance Array
     array = ds["reflectance"].sel(bands=band, method="nearest").compute().data
-    # Create exponent for gamma scaling - can be adjusted by changing 0.2 - higher values 'brighten' the whole scene
+
+    # Create exponent for gamma scaling - can be adjusted by changing
+    # 0.2 - higher values 'brighten' the whole scene
     gamma = math.log(brightness) / math.log(np.nanmedian(array))
+
     # Apply scaling and clip to 0-1 range
     scaled = np.power(array, gamma).clip(0, 1)
+
     # Assign NA's to 1 so they appear white in plots
     if replace_nans:
         scaled = np.nan_to_num(scaled, nan=replace_value)
+
     return scaled
 
 
-def get_rgb_dataset(ds, wavelengths, brightness):
+def get_rgb_dataset(
+    ds: xr.Dataset,
+    wavelengths: list[Union[int, float, str]],
+    brightness: Union[float, list[float]],
+) -> xr.Dataset:
+    """
+    Create an RGB dataset with scaled values for each band.
+
+    This is overcomplicated, but it works, so it'll do for now.
+
+    Modified from `emit_tools.py`
+    """
     # This function works, but ideally we can do this in place rather
     # than creating a new dataset.
 
@@ -111,7 +145,10 @@ def get_rgb_dataset(ds, wavelengths, brightness):
     return ds_rgb
 
 
-def build_interactive_map(ds, ds_rgb):
+def build_interactive_map(ds: xr.Dataset, ds_rgb: xr.Dataset) -> hv.Layout:
+    """
+    Build an interactive map with a spectral plot that updates based on mouse hover.
+    """
     # RGB image/map
     map = ds_rgb.hvplot.rgb(
         x="longitude", y="latitude", bands="bands", aspect="equal", frame_width=600

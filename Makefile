@@ -9,4 +9,4 @@ pip-compile:
 		pip-compile --no-annotate --resolver=backtracking --output-file requirements.txt requirements.in
 
 shell:
-	docker-compose run jupyter bashm
+	docker-compose run jupyter bash

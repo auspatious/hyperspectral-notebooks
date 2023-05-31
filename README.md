@@ -1,10 +1,10 @@
-# EMIT Notebook Examples
+# Hyperspectral Notebook Examples
 
-This repo contains a range of example for working with EMIT hypterspectral data.
+This repo contains a range of example for working with hyperspectral data.
 
 ## Authentication using a token from NASA Earth Data
 
-To set up authentication so that you can load data, do the following:
+To set up authentication so that you can load EMIT data, do the following:
 
 1. Register for an account at [https://urs.earthdata.nasa.gov/home](https://urs.earthdata.nasa.gov/home)
 2. Visit the `user_tokens` page (the "Generate Token" tab)
