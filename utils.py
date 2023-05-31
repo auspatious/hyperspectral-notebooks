@@ -62,9 +62,9 @@ def band_index(ds, band):
 
 def gamma_adjust(ds, band, brightness, replace_nans=True, replace_value=1):
     # Define Reflectance Array
-    array = ds["reflectance"].sel(bands=band, method="nearest").data
+    array = ds["reflectance"].sel(bands=band, method="nearest").compute().data
     # Create exponent for gamma scaling - can be adjusted by changing 0.2 - higher values 'brighten' the whole scene
-    gamma = math.log(brightness) / math.log(np.nanmean(array))
+    gamma = math.log(brightness) / math.log(np.nanmedian(array))
     # Apply scaling and clip to 0-1 range
     scaled = np.power(array, gamma).clip(0, 1)
     # Assign NA's to 1 so they appear white in plots
@@ -79,10 +79,15 @@ def get_rgb_dataset(ds, wavelengths, brightness):
 
     r, g, b = wavelengths
 
+    if type(brightness) in [tuple, list]:
+        r_brightness, g_brightness, b_brightness = brightness
+    else:
+        r_brightness, g_brightness, b_brightness = brightness, brightness, brightness
+
     # Scale the Bands, r, g and b will be used for the rendered image
-    r = gamma_adjust(ds, r, brightness)
-    g = gamma_adjust(ds, g, brightness)
-    b = gamma_adjust(ds, b, brightness)
+    r = gamma_adjust(ds, r, r_brightness)
+    g = gamma_adjust(ds, g, g_brightness)
+    b = gamma_adjust(ds, b, b_brightness)
 
     # Stack Bands and make an index
     rgb = np.stack([r, g, b])
