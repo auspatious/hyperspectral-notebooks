@@ -2,20 +2,12 @@
 
 This repo contains a range of example for working with hyperspectral data.
 
-## Authentication using a token from NASA Earth Data
+Note that on EASI, you must save your Earthdata token as a text file and set
+up a custom Python environment with some extra packages installed. See below
+for instructions on how to do these two steps.
 
-To set up authentication so that you can load EMIT data, do the following:
-
-1. Register for an account at [https://urs.earthdata.nasa.gov/home](https://urs.earthdata.nasa.gov/home)
-2. Visit the `user_tokens` page (the "Generate Token" tab)
-3. Generate a token and copy/save the string
-4. Either:
-   1. Export it as an environment variable, `export EARTHDATA_TOKEN=abcd...` or add it to your `.bashrc
-   so that it's permanently exported; or
-   2. Save it to a text file in your home directory, `echo "abcd..." > ~/EARTHDATA_TOKEN.txt` (or the
-   equivalent on your platform)
-5. There's a function in the [utils.py](utils.py) file that will load the token from these
-   two locations for use in the notebooks.
+Code in this repository is available under the [Apache 2.0](LICENSE.txt)
+license unless otherwise noted in the file.
 
 ## Selecting granules to load
 
@@ -49,6 +41,21 @@ EMIT_L2A_RFL_001_20230401T014249_2309101_003  # Shark Bay Mid
 EMIT_L2A_RFL_001_20230401T014301_2309101_004  # Shark Bay North
 EMIT_L2A_RFL_001_20230131T221923_2303114_008  # Lake Charm
 ```
+
+## Authentication using a token from NASA Earth Data
+
+To set up authentication so that you can load EMIT data, do the following:
+
+1. Register for an account at [https://urs.earthdata.nasa.gov/home](https://urs.earthdata.nasa.gov/home)
+2. Visit the `user_tokens` page (the "Generate Token" tab)
+3. Generate a token and copy/save the string
+4. Either:
+   1. Export it as an environment variable, `export EARTHDATA_TOKEN=abcd...` or add it to your `.bashrc
+   so that it's permanently exported; or
+   2. Save it to a text file in your home directory, `echo "abcd..." > ~/EARTHDATA_TOKEN.txt` (or the
+   equivalent on your platform)
+5. There's a function in the [utils.py](utils.py) file that will load the token from these
+   two locations for use in the notebooks.
 
 ## Installing extra packages
 
