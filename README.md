@@ -6,6 +6,31 @@ Note that on EASI, you must save your Earthdata token as a text file and set
 up a custom Python environment with some extra packages installed. See below
 for instructions on how to do these two steps.
 
+Notebooks that have been developed include the following:
+
+* [01_EMIT_Basic.ipynb](01_EMIT_Basic.ipynb):
+  A basic demonstration of loading data, plotting with holoviews and saving to disk.
+* [02_EMIT_Animations.ipynb](02_EMIT_Animations.ipynb): 
+  Use holoviews to render animations including interactive and video outputs.
+* [03_EMIT_Interactive_Points.ipynb](03_EMIT_Interactive_Points.ipynb):
+  This notebook includes an RGB visualisation that allows the digitisation of
+  points and outputs the spectra at those points.
+* [04_EMIT_Interactive_Polygons.ipynb](04_EMIT_Interactive_Polygons.ipynb):
+  Interactive visualisation of the mean spectra over a polygon, including variance.
+* [05_EMIT_Waterbody_Extraction.ipynb](05_EMIT_Waterbody_Extraction.ipynb):
+  A worked example that describes a process of identifying waterbodies that may
+  have an algal bloom. This notebook ties together a range of principles from
+  the previous examples.
+* [06_EMIT_Segment_Anything.ipynb](06_EMIT_Segment_Anything.ipynb):
+  Basic example of the use of the
+  [Segment Geospatial](https://github.com/opengeos/segment-geospatial) library.
+* [07_S2_Segment_anything.ipynb](07_S2_Segment_anything.ipynb):
+  Another simple example of the use of Segment Geospatial but using Sentinel-2
+  data.
+
+There are examples in the `pixxel` folder that show how to use that data. And there
+are some notebooks with `XX` at the start of their name that are less developed.
+
 Code in this repository is available under the [Apache 2.0](LICENSE.txt)
 license unless otherwise noted in the file.
 
