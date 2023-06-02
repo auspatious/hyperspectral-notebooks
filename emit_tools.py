@@ -1,5 +1,6 @@
 """
 Copied from https://github.com/nasa/EMIT-Data-Resources/blob/main/modules/emit_tools.py
+and modified slightly.
 
 This Module has the functions related to working with an EMIT dataset. This includes doing things
 like opening and flattening the data to work in xarray, orthorectification, and extracting point and area samples.

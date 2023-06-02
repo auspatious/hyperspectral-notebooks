@@ -1,12 +1,28 @@
 import math
+import os
+from typing import Optional, Union
 
 import holoviews as hv
 import hvplot.xarray  # noqa: F401
 import numpy as np
 import xarray as xr
-import os
+from fsspec.implementations.http import HTTPFileSystem
 
-from typing import Union, Optional
+from emit_tools import emit_xarray
+
+
+def load_emit_granule(granule: str, token: str) -> xr.Dataset:
+    """
+    Load an EMIT granule from the NASA LPDAAC S3 bucket.
+    """
+
+    http_url = (
+        "https://data.lpdaac.earthdatacloud.nasa.gov/"
+        f"lp-prod-protected/EMITL2ARFL.001/{granule}/{granule}.nc"
+    )
+    fs = HTTPFileSystem(headers={"Authorization": f"bearer {token}"})
+
+    return emit_xarray(fs.open(http_url))
 
 
 def get_earthdata_token():

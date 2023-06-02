@@ -75,7 +75,7 @@ To set up authentication so that you can load EMIT data, do the following:
 2. Visit the `user_tokens` page (the "Generate Token" tab)
 3. Generate a token and copy/save the string
 4. Either:
-   1. Export it as an environment variable, `export EARTHDATA_TOKEN=abcd...` or add it to your `.bashrc
+   1. Export it as an environment variable, `export EARTHDATA_TOKEN=abcd...` or add it to your `.bashrc`
    so that it's permanently exported; or
    2. Save it to a text file in your home directory, `echo "abcd..." > ~/EARTHDATA_TOKEN.txt` (or the
    equivalent on your platform)
@@ -89,10 +89,10 @@ For local development, you should be able to install the requirements listed in
 
 Using [EASI](https://docs.csiro.easi-eo.solutions/user-guide/developers/jupyterlab/virtual-environment/)
 (the CSIRO Jupyter platform) you can set up a virtual environment following
-[their instructions](https://docs.csiro.easi-eo.solutions/user-guide/developers/jupyterlab/virtual-environment/)
+[their instructions](https://docs.csiro.easi-eo.solutions/user-guide/developers/jupyterlab/virtual-environment/).
 
 Custom requirements we need include:
 
-```bash
+``` bash
 pip install segment-geospatial leafmap localtileserver python-geohash odc-stac>=0.3.6
 ```
