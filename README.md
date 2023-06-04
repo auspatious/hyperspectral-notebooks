@@ -28,8 +28,9 @@ Notebooks that have been developed include the following:
   Another simple example of the use of Segment Geospatial but using Sentinel-2
   data.
 
-There are examples in the `pixxel` folder that show how to use that data. And there
-are some notebooks with `XX` at the start of their name that are less developed.
+There are examples in the [pixxel](pixxel/README.md) folder that show how to use
+that data. And there are some notebooks with `XX` at the start of their name that
+are less developed.
 
 Code in this repository is available under the [Apache 2.0](LICENSE.txt)
 license unless otherwise noted in the file.
@@ -81,6 +82,18 @@ To set up authentication so that you can load EMIT data, do the following:
    equivalent on your platform)
 5. There's a function in the [utils.py](utils.py) file that will load the token from these
    two locations for use in the notebooks.
+
+## Using Segment Anything on EASI
+
+To use Segment Anything you need to use a GPU instance on EASI. To start
+a GPU instance, you'll need to stop your current notebook environment
+(go to the "Hub Control Panel" in the "File" menu and choose "Stop My Server")
+and then when that's finished shutting down, launch a new server and choose
+a "Resource Request" that includes a GPU. If you don't have a GPU option,
+please contact EASI Support.
+
+When you have a GPU instance running, you should activate your custom
+environment (see below) and then the example notebooks should work.
 
 ## Installing extra packages
 
