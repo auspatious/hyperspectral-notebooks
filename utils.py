@@ -31,10 +31,10 @@ def get_earthdata_token():
     Requires either an EARTHDATA_TOKEN environment variable or a text file
     called EARTHDATA_TOKEN.txt in the users home directory.
     """
-    try:
-        token = os.environ["EARTHDATA_TOKEN"]
+    token = os.getenv('EARTHDATA_TOKEN')
+    if token is not None:
         print("Loaded token from EARTHDATA_TOKEN environment variable")
-    except KeyError:
+    else:
         try:
             # Open a text file from users home directory
             home = os.path.expanduser("~")
